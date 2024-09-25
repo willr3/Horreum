@@ -39,13 +39,10 @@ public class LabelDAO extends PanacheEntity implements Comparable<LabelDAO> {
     public LabelDAO copy(TestDao test) {
         LabelDAO copyLabel =  new LabelDAO();
         copyLabel.name = this.name;
-        copyLabel.uri = this.uri; //need to modify for the test
-        copyLabel.parent_uri = this.uri;
         copyLabel.parent = test;
         copyLabel.target_schema = this.target_schema;
         copyLabel.multiType = this.multiType;
         copyLabel.scalarMethod = this.scalarMethod;
-        copyLabel.parent_uri = this.uri;
         copyLabel.loadExtractors(this.extractors.stream().map(extractor -> ExtractorDao.fromString(extractor.jsonpath).setName(extractor.name)).toArray(ExtractorDao[]::new));
         return copyLabel;
     }
@@ -65,10 +62,6 @@ public class LabelDAO extends PanacheEntity implements Comparable<LabelDAO> {
 
     public String target_schema; //using a string to simplify the PoC
 
-    //    @NotNull  //disable for now, until we have more strict validation
-    public String uri; //using a string to simplify the PoC
-    public String parent_uri; //using a string to simplify the PoC
-
     @ElementCollection(fetch = FetchType.EAGER)
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "parent")
     public List<@NotNull(message="null extractors are not supported") @ValidTarget ExtractorDao> extractors;
@@ -85,16 +78,10 @@ public class LabelDAO extends PanacheEntity implements Comparable<LabelDAO> {
         this(name,null);
     }
     public LabelDAO(String name, TestDao parent){
-        this(name,null,parent);
-    }
-
-    public LabelDAO(String name, String uri, TestDao parent){
         this.name = name;
         this.parent = parent;
-        this.uri = uri;
         this.extractors = new ArrayList<>();
     }
-
 
     public LabelDAO loadExtractors(ExtractorDao...extractors){
         this.extractors = Arrays.asList(extractors);

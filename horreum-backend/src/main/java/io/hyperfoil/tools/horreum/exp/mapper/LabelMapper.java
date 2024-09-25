@@ -14,8 +14,6 @@ public class LabelMapper {
         dto.name = l.name;
         dto.scalarMethod = l.scalarMethod;
         dto.multiType = l.multiType;
-        dto.uri = l.uri;
-        dto.parent_uri = l.parent_uri;
         dto.target_schema = l.target_schema;
 //        dto.parent = TestMapper.from(l.parent);
         dto.reducer = LabelReducerMapper.from(l.reducer);
@@ -33,8 +31,6 @@ public class LabelMapper {
         l.name = dto.name;
         l.scalarMethod = dto.scalarMethod;
         l.multiType = dto.multiType;
-        l.uri = dto.uri;
-        l.parent_uri = dto.parent_uri;
         l.target_schema = dto.target_schema;
         l.parent = TestMapper.to(dto.parent);
         l.reducer = LabelReducerMapper.to(dto.reducer);

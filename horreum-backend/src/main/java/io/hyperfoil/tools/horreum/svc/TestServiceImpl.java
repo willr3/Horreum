@@ -103,7 +103,6 @@ public class TestServiceImpl implements TestService {
                   GROUP BY dataset.id, runId
          ) select * from combined FILTER_PLACEHOLDER ORDER_PLACEHOLDER limit :limit offset :offset
          """;
-
    protected static final String LABEL_VALUES_SUMMARY_QUERY = """
          SELECT DISTINCT COALESCE(jsonb_object_agg(label.name, lv.value), '{}'::jsonb) AS values
                   FROM dataset

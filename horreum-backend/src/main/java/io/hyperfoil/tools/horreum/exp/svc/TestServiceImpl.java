@@ -56,10 +56,15 @@ public class TestServiceImpl implements TestService {
     @PermitAll
     public Test createRhivos() {
         TestDao t = new TestDao("rhivos-perf-comprehensive");
-        String transformName = "transform";
-        String transformPrefix = transformName + ExtractorDao.FOR_EACH_SUFFIX + ExtractorDao.NAME_SEPARATOR;
+        String transformName = "transformIter";
+        String transformPrefix = transformName+ExtractorDao.NAME_SEPARATOR;//transform[]:
         t.loadLabels(
-                new LabelDAO(transformName, t)
+                new LabelDAO(transformName,t)
+                        .loadExtractors(
+                                ExtractorDao.fromString("transform"+ExtractorDao.FOR_EACH_SUFFIX)
+                        )
+                        .setTargetSchema("urn:rhivos-perf-comprehensive-datasets:01"),
+                new LabelDAO("transform", t)
                         .loadExtractors(
                                 ExtractorDao.fromString("$.user").setName("user"),
                                 ExtractorDao.fromString("$.uuid").setName("uuid"),
@@ -80,7 +85,6 @@ public class TestServiceImpl implements TestService {
                                 ExtractorDao.fromString("$.coremark_pro_workload[*].results").setName("coremark_pro_results"),
                                 ExtractorDao.fromString("$.autobench_workload[*].results").setName("autobench_results")
                         )
-                        .setTargetSchema("urn:rhivos-perf-comprehensive-datasets:01")
                         .setReducer(new LabelReducerDao(
                                 """
                                         ({

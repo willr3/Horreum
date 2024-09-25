@@ -34,12 +34,6 @@ public class TestDao extends PanacheEntity {
         return this;
     }
 
-    public void copyLabelSet(String uri){
-        List<LabelSetDao> labelSet = LabelSetDao.find("uri", uri).list();
-        labelSet.forEach(labelSet1 -> {
-            this.loadLabels(labelSet1.labels.stream().map(lse -> lse.label.copy(this)).toArray(LabelDAO[]::new));
-        });
-    }
     public boolean hasTempLabel(ExtractorDao e){
         return ExtractorDao.Type.VALUE.equals(e.type)
         && (

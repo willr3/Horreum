@@ -13,9 +13,6 @@ public class Label {
 
     public String target_schema;
 
-    public String uri;
-    public String parent_uri;
-
     public List<Extractor> extractors;
 
     public LabelReducer reducer;

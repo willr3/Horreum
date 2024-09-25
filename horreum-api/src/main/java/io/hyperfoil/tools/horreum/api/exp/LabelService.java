@@ -17,5 +17,5 @@ public interface LabelService {
     @GET
     Label get(long id);
 
-    record ValueMap(ObjectNode data, long index, long labelId, long runId, long testId){};
+    public record ValueMap(ObjectNode data, long index, long labelId, long runId, long testId){};
 }
