@@ -3329,10 +3329,6 @@ components:
           $ref: '#/components/schemas/Test1'
         target_schema:
           type: string
-        uri:
-          type: string
-        parent_uri:
-          type: string
         extractors:
           type: array
           items:
